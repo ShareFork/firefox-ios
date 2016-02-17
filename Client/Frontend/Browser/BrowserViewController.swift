@@ -115,15 +115,13 @@ class BrowserViewController: UIViewController {
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-        guard let displayedPopoverController = self.displayedPopoverController where displayedPopoverController.isBeingPresented() else {
-            return
-        }
-
-        displayedPopoverController.dismissViewControllerAnimated(true, completion: nil)
+        displayedPopoverController?.dismissViewControllerAnimated(true, completion: nil)
 
         coordinator.animateAlongsideTransition(nil) { context in
-            self.updateDisplayedPopoverProperties?()
-            self.presentViewController(displayedPopoverController, animated: true, completion: nil)
+            if let displayedPopoverController = self.displayedPopoverController {
+                self.updateDisplayedPopoverProperties?()
+                self.presentViewController(displayedPopoverController, animated: true, completion: nil)
+            }
         }
     }
 
